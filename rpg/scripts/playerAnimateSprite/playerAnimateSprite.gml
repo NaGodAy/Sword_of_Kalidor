@@ -11,5 +11,4 @@ if (localFrame >= _totalFrames)
 	animationEnd = true;
 	localFrame -= _totalFrames;
 } else animationEnd = false;
-
 }

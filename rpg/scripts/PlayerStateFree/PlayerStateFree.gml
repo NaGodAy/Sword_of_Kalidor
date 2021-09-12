@@ -40,11 +40,39 @@ if (keyActivate)
 	//3. Otherwise, there is somthing and it has a script! Activate!
 	//4. If the thing we activate is an NPC, make it face torward us!
 	
-	var _activateX = lengthdir_x(10, direction);
-	var _activateY = lengthdir_y(10, direction);
-	activate = instance_position(x + _activateX, y + _activateY, pEntity);
+	var _activateX = x + lengthdir_x(10, direction);
+	var _activateY = y + lengthdir_y(10, direction);
+	var _activateSize = 4;
+	var _activateList = ds_list_create();
+	activate = noone;
+	var _entitiesFound = collision_rectangle_list(
+		_activateX - _activateSize,
+		_activateY - _activateSize,
+		_activateX + _activateSize,
+		_activateY + _activateSize,
+		pEntity, 
+		false, 
+		true,
+		_activateList, 
+		true
+	);
+	
+	//if the first instance we find
+	while (_entitiesFound > 0)
+{
+	var _check = _activateList[| --_entitiesFound];
+	if (_check != global.iLifted) && (_check.entityActivateScript != -1)
+	{
+		activate = _check;
+		break;
+	}
+
+}
+	
+	ds_list_destroy(_activateList);
+	
 	//Roll if nothing to activate or not
-	if (activate == noone || activate.entityActivateScript == -1)
+	if (activate == noone)
 	{
 		// Throw something if held, therwise roll
 		if (global.iLifted != noone)

@@ -1,6 +1,5 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function SlimeWander(){
+function SlimeWander()
+{
 sprite_index = sprMove;
 
 //At destination or given up?
@@ -38,9 +37,18 @@ else//Move torwards new destination
 	if (hSpeed != 0) image_xscale = sign(hSpeed);
 	
 	//Collide & move
-	var _collided = EnemyTileCollision();
-	
-	
+	EnemyTileCollision();
 }
 
+//Check for aggro
+if ((++aggroCheck >= aggroCheckDuration) && (aggroActivate = true))
+{
+	aggroCheck = 0;
+	if (instance_exists(oPlayer)) && (point_distance(x, y, oPlayer.x, oPlayer.y) <= enemyAggroRadius)
+	{
+		state = ENEMYSTATE.CHASE;
+		target = oPlayer;
+		
+	}
+}
 }

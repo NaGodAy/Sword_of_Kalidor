@@ -1,4 +1,5 @@
-function CalcAttack(){
+function CalcAttack(argument0)
+{
 // Use attack hitbox & check for hits
 mask_index = argument0
 var hitByAttackNow = ds_list_create();
@@ -14,9 +15,11 @@ if (hits > 0)
 			ds_list_add(hitByAttack, hitID);
 			with (hitID)
 			{
-				
-				if (entityHitScript != -1) script_execute(entityHitScript);
-				
+				if (object_is_ancestor(object_index, pEnemy))
+				{
+					HurtEnemy(id, 5, other.id, 10);
+				}
+				else if (entityHitScript != -1) script_execute(entityHitScript);
 			}
 		}
 	}
